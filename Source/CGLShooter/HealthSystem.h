@@ -44,7 +44,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	float Health;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	float MaxHealth;
 
 	// UPROPERTY(VisibleAnywhere, Replicated)
