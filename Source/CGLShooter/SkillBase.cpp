@@ -84,8 +84,9 @@ void USkillBase::SetSpawnTime(float SpawnTime)
 	AbilitySpawnTime = SpawnTime;
 }
 
-void USkillBase::SetAbilityDamage(const float Power, float AbilityPower, float AddValue)
+void USkillBase::SetAbilityDamage(float AbilityPower, float AddValue)
 {
+	float const Power = Cast<UStatSystem>(OwnerCharacter)->GetDamage();
 	AbilityDamage = (Power * AbilityPower) + AddValue;
 }
 
