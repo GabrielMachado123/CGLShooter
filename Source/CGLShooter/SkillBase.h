@@ -10,17 +10,18 @@
 /**
  * 
  */
+class AShooter;
 UCLASS(Blueprintable)
 class CGLSHOOTER_API USkillBase : public UObject, public IUsableSkill
 {
 public:
 	GENERATED_BODY()
 	UFUNCTION(BlueprintCallable)
-	virtual void InitializeSkill(ACharacter* Playable, UWorld* World, int Team) override;
+	virtual void InitializeSkill(AShooter* Playable, UWorld* World, int Team) override;
 	UFUNCTION(BlueprintCallable)
 	virtual void UseSkill() override;
 	void StartCooldownTimer();
-	virtual void CastSkill(UAnimMontage* AnimationToPlay, float CooldownModifier) override;
+	virtual void CastSkill(UAnimMontage* AnimationToPlay, float CooldownModifier, float Damage) override;
 
 	UFUNCTION()
 	void ResetCooldown();
@@ -53,6 +54,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
 	float AbilityDamage;
+	float Power;
 	UFUNCTION(BlueprintCallable)
 	void SetAbilityDamage(float AbilityPower, float AddValue);
 
@@ -65,7 +67,7 @@ public:
 	bool bCanUse;
 
 	UPROPERTY(BlueprintReadWrite)
-	ACharacter* OwnerCharacter;
+	AShooter* OwnerCharacter;
 	UPROPERTY(BlueprintReadWrite)
 	UWorld* CachedWorld;
 	IUsableCharacterSkillSlot* CachedCharacterInterface;

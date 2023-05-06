@@ -95,6 +95,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void RecoverHealth(float Amount) override;
 
+	bool bIsMovingBackwards = false;
+	bool bIsSlowApplied = false;
+
 
 protected:
 	/** Called for movement input */

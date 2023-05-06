@@ -82,7 +82,8 @@ void AShooter::BeginPlay()
 
 	HealthComponent->SetMaxHealth(StatComponent->GetMaxHealth());
 	HealthComponent->SetHealthToMaxHealth();
-	
+
+	GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
 }
 
 void AShooter::Tick(float DeltaSeconds)
@@ -100,6 +101,16 @@ void AShooter::Tick(float DeltaSeconds)
 	if (GetMovementComponent()->IsMovingOnGround() && GroundedTime < JumpBuffer)
 	{
 		GroundedTime += DeltaSeconds;
+	}
+
+	if(bIsMovingBackwards && !bIsSlowApplied)
+	{
+		GetCharacterMovement()->MaxWalkSpeed *= .8f;
+		bIsSlowApplied = true;
+	}else if(!bIsMovingBackwards && bIsSlowApplied)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
+		bIsSlowApplied = false;
 	}
 }
 
@@ -181,6 +192,9 @@ void AShooter::Move(const FInputActionValue& Value)
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
+
+	bIsMovingBackwards = (MovementVector.Y <= 0) ? true : false; 
+
 }
 
 void AShooter::Look(const FInputActionValue& Value)
@@ -218,7 +232,7 @@ void AShooter::PopulateSkillArray()
 }
 
 FRotator AShooter::CalculateShootingAngle(const FVector InitialPoint,
-                                                             const float Range) const
+                                          const float Range) const
 {
 	const FVector TraceStart = GetFollowCamera()->GetComponentLocation();
 	const FVector TraceEnd = (UKismetMathLibrary::GetForwardVector(
@@ -242,7 +256,8 @@ void AShooter::UseBasicAttack()
 	if (RuntimeSkills.IsValidIndex(0) && !GetIsCasting() && RuntimeSkills[0]->bCanUse)
 	{
 		CachedMouseRotator = CalculateShootingAngle(ShootingPoint->GetComponentLocation(), AttackRange);
-		RuntimeSkills[0]->CastSkill(AttackAnimations[0], StatComponent->GetAttackSpeedAsCooldown());
+		RuntimeSkills[0]->CastSkill(AttackAnimations[0], StatComponent->GetAttackSpeedAsCooldown(),
+		                            StatComponent->GetDamage());
 	}
 }
 

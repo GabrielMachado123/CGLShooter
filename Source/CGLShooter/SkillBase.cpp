@@ -7,7 +7,7 @@
 #include "SkillActor.h"
 #include "UsableCharacterSkillSlot.h"
 
-void USkillBase::InitializeSkill(ACharacter* Playable, UWorld* World, int Team)
+void USkillBase::InitializeSkill(AShooter* Playable, UWorld* World, int Team)
 {
 	OwnerCharacter = Playable;
 	CachedWorld = World;
@@ -20,12 +20,13 @@ void USkillBase::InitializeSkill(ACharacter* Playable, UWorld* World, int Team)
 	OnInitialize();
 }
 
-void USkillBase::CastSkill(UAnimMontage* AnimationToPlay, float CooldownModifier)
+void USkillBase::CastSkill(UAnimMontage* AnimationToPlay, float CooldownModifier,float Damage)
 {
 	if (bCanUse)
 	{
 		CachedCharacterInterface->SetIsCasting(true);
 		AttackAnimation = AnimationToPlay;
+		Power = Damage;
 		SetCooldownModifier(CooldownModifier);
 		bCanUse = false;
 		// HandleCastEvents(AbilityCooldown);
@@ -86,8 +87,9 @@ void USkillBase::SetSpawnTime(float SpawnTime)
 
 void USkillBase::SetAbilityDamage(float AbilityPower, float AddValue)
 {
-	float const Power = Cast<UStatSystem>(OwnerCharacter)->GetDamage();
+	GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Blue, FString::Printf(TEXT("%f"), Power));
 	AbilityDamage = (Power * AbilityPower) + AddValue;
+	GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Blue, FString::Printf(TEXT("%f"), AbilityDamage));
 }
 
 void USkillBase::SetAbilityRange(const float Range)
