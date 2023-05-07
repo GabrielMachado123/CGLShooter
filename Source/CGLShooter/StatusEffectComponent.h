@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Effectable.h"
 #include "StatusEffectFactory.h"
 #include "StatSystem.h"
 #include "StatusEffect.h"
@@ -27,7 +26,7 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void AddDamageIncrease(float TimeAmount, float BuffAmount);
 	UFUNCTION()
 	void SetStatsComponent(UStatSystem* StatsComponentToSet);

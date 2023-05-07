@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "FunctionalTestUtilityLibrary.h"
+#include "StatusEffectComponent.h"
 #include "UObject/Interface.h"
 #include "Effectable.generated.h"
 
@@ -22,5 +23,5 @@ class CGLSHOOTER_API IEffectable
 
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual void AddDamageIncrease(float TimeAmount,float BuffAmount) = 0;
+	virtual UStatusEffectsComponent* IGetStatusEffectsComponent() = 0;
 };

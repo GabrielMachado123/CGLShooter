@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Damageable.h"
+#include "Effectable.h"
 #include "GameFramework/Character.h"
 #include "HealthSystem.h"
 #include "InputActionValue.h"
@@ -109,7 +110,8 @@ public:
 	bool bIsSlowApplied = false;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void AddDamageIncrease(float TimeAmount,float BuffAmount) override;
+	virtual UStatusEffectsComponent* IGetStatusEffectsComponent() override {return StatusEffectComponent;} ;
+	
 
 protected:
 	/** Called for movement input */

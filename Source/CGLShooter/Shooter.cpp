@@ -172,11 +172,6 @@ void AShooter::RecoverHealth(float Amount)
 	HealthComponent->RecoverHealth(Amount);
 }
 
-void AShooter::AddDamageIncrease(float TimeAmount, float BuffAmount)
-{
-	StatusEffectComponent->AddDamageIncrease(TimeAmount, BuffAmount);
-}
-
 void AShooter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
