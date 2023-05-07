@@ -27,8 +27,8 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
-	// UFUNCTION()
-	// void AddCastingSlow(float TimeAmount, float BuffAmount);
+	UFUNCTION()
+	void AddDamageIncrease(float TimeAmount, float BuffAmount);
 	UFUNCTION()
 	void SetStatsComponent(UStatSystem* StatsComponentToSet);
 

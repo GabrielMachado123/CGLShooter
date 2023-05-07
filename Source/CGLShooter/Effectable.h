@@ -21,6 +21,6 @@ class CGLSHOOTER_API IEffectable
 	GENERATED_BODY()
 
 public:
-	// UFUNCTION(BlueprintCallable)
-	// virtual void AddCastingSlow(float TimeAmount,float BuffAmount) = 0;
+	UFUNCTION(BlueprintCallable)
+	virtual void AddDamageIncrease(float TimeAmount,float BuffAmount) = 0;
 };

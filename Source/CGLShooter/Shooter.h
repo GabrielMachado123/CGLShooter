@@ -18,7 +18,7 @@
 
 
 UCLASS(config=Game)
-class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDamageable
+class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDamageable, public IEffectable
 {
 	GENERATED_BODY()
 
@@ -108,6 +108,8 @@ public:
 	bool bIsMovingBackwards = false;
 	bool bIsSlowApplied = false;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void AddDamageIncrease(float TimeAmount,float BuffAmount) override;
 
 protected:
 	/** Called for movement input */

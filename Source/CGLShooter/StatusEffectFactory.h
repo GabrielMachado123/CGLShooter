@@ -16,7 +16,7 @@ public:
 	static UObject* CreateBuff(const float TimeAmount,const float BuffAmount,UStatSystem* StatsComponent)
 	{
 		T* NewBuff = NewObject<T>();
-		IBuff* Buff = Cast<IBuff>(NewBuff);
+		IStatusEffect* Buff = Cast<IStatusEffect>(NewBuff);
 		Buff->SetTime(TimeAmount);
 		Buff->SetAmount(BuffAmount);
 		Buff->OnBuffBegin(StatsComponent);

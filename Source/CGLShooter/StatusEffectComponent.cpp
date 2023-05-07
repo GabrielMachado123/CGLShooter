@@ -5,6 +5,7 @@
 
 #include <array>
 
+#include "DamageIncrease.h"
 #include "StatusEffectFactory.h"
 
 
@@ -80,9 +81,9 @@ void UStatusEffectsComponent::TickArrays(float DeltaTime)
 	ArrayLength = CurrentBuffArray.Num();
 }
 
-// void UStatusEffectsComponent::AddCastingSlow(float TimeAmount, float BuffAmount)
-// {
-// 	UObject* BuffToAdd = BuffFactory->CreateBuff<UCastingSlow>(TimeAmount, BuffAmount, StatsComponent);
-// 	CurrentBuffArray.Add(BuffToAdd);
-// 	CurrentBuffInterfaceArray.Add(Cast<IBuff>(BuffToAdd));
-// }
+void UStatusEffectsComponent::AddDamageIncrease(float TimeAmount, float BuffAmount)
+{
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UDamageIncrease>(TimeAmount, BuffAmount, StatsComponent);
+	CurrentBuffArray.Add(BuffToAdd);
+	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
+}

@@ -71,7 +71,6 @@ float UHealthSystem::GetHealthAsPercentage() const
 void UHealthSystem::SetHealthToMaxHealth()
 {
 	Health = MaxHealth;
-	Health -= 50;
 }
 
 void UHealthSystem::SetMaxHealth(float Amount)
