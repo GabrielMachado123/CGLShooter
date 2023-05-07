@@ -52,6 +52,7 @@ AShooter::AShooter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthSystem>(TEXT("Health Component"));
 	StatComponent = CreateDefaultSubobject<UStatSystem>(TEXT("Stat Component"));
+	StatusEffectComponent = CreateDefaultSubobject<UStatusEffectsComponent>(TEXT("Status Effect Component"));
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -82,6 +83,7 @@ void AShooter::BeginPlay()
 
 	HealthComponent->SetMaxHealth(StatComponent->GetMaxHealth());
 	HealthComponent->SetHealthToMaxHealth();
+	StatusEffectComponent->SetStatsComponent(StatComponent);
 
 	GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
 }
