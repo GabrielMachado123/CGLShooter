@@ -86,7 +86,7 @@ void AShooter::BeginPlay()
 	StatusEffectComponent->SetStatsComponent(StatComponent);
 
 	StatComponent->HealthComponent = HealthComponent;
-	
+
 	GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
 }
 
@@ -107,11 +107,12 @@ void AShooter::Tick(float DeltaSeconds)
 		GroundedTime += DeltaSeconds;
 	}
 
-	if(bIsMovingBackwards && !bIsSlowApplied)
+	if (bIsMovingBackwards && !bIsSlowApplied)
 	{
 		GetCharacterMovement()->MaxWalkSpeed *= .8f;
 		bIsSlowApplied = true;
-	}else if(!bIsMovingBackwards && bIsSlowApplied)
+	}
+	else if (!bIsMovingBackwards && bIsSlowApplied)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
 		bIsSlowApplied = false;
@@ -197,8 +198,7 @@ void AShooter::Move(const FInputActionValue& Value)
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
 
-	bIsMovingBackwards = (MovementVector.Y <= 0) ? true : false; 
-
+	bIsMovingBackwards = (MovementVector.Y <= 0) ? true : false;
 }
 
 void AShooter::Look(const FInputActionValue& Value)
@@ -256,8 +256,7 @@ FRotator AShooter::CalculateShootingAngle(const FVector InitialPoint,
 
 void AShooter::UseBasicAttack()
 {
-	// GEngine->AddOnScreenDebugMessage(1, .5f, FColor::Red,TEXT("Shot"));
-	if (RuntimeSkills.IsValidIndex(0) && !GetIsCasting() && RuntimeSkills[0]->bCanUse)
+	if (RuntimeSkills.IsValidIndex(0) && !GetIsCasting() && RuntimeSkills[0]->bCanUse && RuntimeSkills[1]->bCanUse)
 	{
 		CachedMouseRotator = CalculateShootingAngle(ShootingPoint->GetComponentLocation(), AttackRange);
 		RuntimeSkills[0]->CastSkill(AttackAnimations[0], StatComponent->GetAttackSpeedAsCooldown(),
@@ -267,8 +266,12 @@ void AShooter::UseBasicAttack()
 
 void AShooter::UseFirstAbility()
 {
-	CachedMouseRotator = CalculateShootingAngle(ShootingPoint->GetComponentLocation(), AttackRange);
-	GEngine->AddOnScreenDebugMessage(1, .5f, FColor::Blue,TEXT("First"));
+	if (RuntimeSkills.IsValidIndex(1) && !GetIsCasting() && RuntimeSkills[1]->bCanUse)
+	{
+		CachedMouseRotator = CalculateShootingAngle(ShootingPoint->GetComponentLocation(), AttackRange);
+		RuntimeSkills[1]->CastSkill(AttackAnimations[1], StatComponent->GetCooldownReduction(),
+		                            StatComponent->GetDamage());
+	}
 }
 
 void AShooter::UseSecondAbility()
