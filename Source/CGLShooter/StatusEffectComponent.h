@@ -20,14 +20,22 @@ public:
 	UStatusEffectsComponent();
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-							   FActorComponentTickFunction* ThisTickFunction) override;
+	                           FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION()
 	void TickArrays(float DeltaTime);
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
 	UFUNCTION(BlueprintCallable)
-	void AddDamageIncrease(float TimeAmount, float BuffAmount);
+	void AddDamageModifier(float TimeAmount, float BuffAmount);
+	UFUNCTION(BlueprintCallable)
+	void AddMaxHealthModifier(float TimeAmount, float BuffAmount);
+	UFUNCTION(BlueprintCallable)
+	void AddAttackSpeedModifier(float TimeAmount, float BuffAmount);
+	UFUNCTION(BlueprintCallable)
+	void AddMovementSpeedModifier(float TimeAmount, float BuffAmount);
+	UFUNCTION(BlueprintCallable)
+	void AddCooldownReductionModifier(float TimeAmount, float BuffAmount);
 	UFUNCTION()
 	void SetStatsComponent(UStatSystem* StatsComponentToSet);
 

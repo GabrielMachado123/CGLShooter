@@ -5,7 +5,11 @@
 
 #include <array>
 
-#include "DamageIncrease.h"
+#include "AttackSpeedModifier.h"
+#include "CooldownReductionModifier.h"
+#include "DamageModifier.h"
+#include "MaxHealthModifier.h"
+#include "MovementSpeedModifier.h"
 #include "StatusEffectFactory.h"
 
 
@@ -81,9 +85,37 @@ void UStatusEffectsComponent::TickArrays(float DeltaTime)
 	ArrayLength = CurrentBuffArray.Num();
 }
 
-void UStatusEffectsComponent::AddDamageIncrease(float TimeAmount, float BuffAmount)
+void UStatusEffectsComponent::AddDamageModifier(float TimeAmount, float BuffAmount)
 {
-	UObject* BuffToAdd = BuffFactory->CreateBuff<UDamageIncrease>(TimeAmount, BuffAmount, StatsComponent);
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UDamageModifier>(TimeAmount, BuffAmount, StatsComponent);
+	CurrentBuffArray.Add(BuffToAdd);
+	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
+}
+
+void UStatusEffectsComponent::AddMaxHealthModifier(float TimeAmount, float BuffAmount)
+{
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UMaxHealthModifier>(TimeAmount, BuffAmount, StatsComponent);
+	CurrentBuffArray.Add(BuffToAdd);
+	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
+}
+
+void UStatusEffectsComponent::AddAttackSpeedModifier(float TimeAmount, float BuffAmount)
+{
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UAttackSpeedModifier>(TimeAmount, BuffAmount, StatsComponent);
+	CurrentBuffArray.Add(BuffToAdd);
+	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
+}
+
+void UStatusEffectsComponent::AddMovementSpeedModifier(float TimeAmount, float BuffAmount)
+{
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UMovementSpeedModifier>(TimeAmount, BuffAmount, StatsComponent);
+	CurrentBuffArray.Add(BuffToAdd);
+	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
+}
+
+void UStatusEffectsComponent::AddCooldownReductionModifier(float TimeAmount, float BuffAmount)
+{
+	UObject* BuffToAdd = BuffFactory->CreateBuff<UCooldownReductionModifier>(TimeAmount, BuffAmount, StatsComponent);
 	CurrentBuffArray.Add(BuffToAdd);
 	CurrentBuffInterfaceArray.Add(Cast<IStatusEffect>(BuffToAdd));
 }

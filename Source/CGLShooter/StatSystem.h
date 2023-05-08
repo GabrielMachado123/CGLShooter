@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HealthSystem.h"
 #include "Components/ActorComponent.h"
 #include "StatSystem.generated.h"
 
@@ -43,9 +44,12 @@ public:
 	float GetDamage() const { return Damage; }
 	float GetCooldownReduction() const { return CooldownReduction; }
 
-	void SetMaxHealth(float Amount) { MaxHealth += Amount; }
+	void SetMaxHealth(float Amount) { MaxHealth += Amount; HealthComponent->SetMaxHealth(MaxHealth);}
 	void SetAttackSpeed(float Amount) { AttackSpeed += Amount; }
 	void SetMovementSpeed(float Amount) { MovementSpeed += Amount; }
 	void SetDamage(float Amount) { Damage += Amount; }
-	void GetCooldownReduction(float Amount) { CooldownReduction += Amount; }
+	void SetCooldownReduction(float Amount) { CooldownReduction += Amount; }
+
+	UPROPERTY()
+	TObjectPtr<UHealthSystem> HealthComponent;
 };

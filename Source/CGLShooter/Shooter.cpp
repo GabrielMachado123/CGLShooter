@@ -50,8 +50,8 @@ AShooter::AShooter()
 	// Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	HealthComponent = CreateDefaultSubobject<UHealthSystem>(TEXT("Health Component"));
 	StatComponent = CreateDefaultSubobject<UStatSystem>(TEXT("Stat Component"));
+	HealthComponent = CreateDefaultSubobject<UHealthSystem>(TEXT("Health Component"));
 	StatusEffectComponent = CreateDefaultSubobject<UStatusEffectsComponent>(TEXT("Status Effect Component"));
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -85,6 +85,8 @@ void AShooter::BeginPlay()
 	HealthComponent->SetHealthToMaxHealth();
 	StatusEffectComponent->SetStatsComponent(StatComponent);
 
+	StatComponent->HealthComponent = HealthComponent;
+	
 	GetCharacterMovement()->MaxWalkSpeed = StatComponent->GetMovementSpeed();
 }
 

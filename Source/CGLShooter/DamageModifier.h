@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "StatusEffect.h"
 #include "UObject/NoExportTypes.h"
-#include "DamageIncrease.generated.h"
+#include "DamageModifier.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CGLSHOOTER_API UDamageIncrease : public UObject, public IStatusEffect
+class CGLSHOOTER_API UDamageModifier : public UObject, public IStatusEffect
 {
 	GENERATED_BODY()
 	
