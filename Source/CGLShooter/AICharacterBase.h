@@ -9,7 +9,6 @@
 #include "AICharacterBase.generated.h"
 
 
-
 UCLASS()
 
 class CGLSHOOTER_API AAICharacterBase : public ACharacter, public IDamageable
@@ -23,17 +22,18 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Health, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UHealthSystem> HealthComponent;
-	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void TakeDamage(float Amount) override;
+	virtual bool TakeDamage(float Amount) override;
 	UFUNCTION(BlueprintCallable)
 	virtual void RecoverHealth(float Amount) override;
-	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeath();
 };

@@ -6,10 +6,9 @@
 // Sets default values
 AAICharacterBase::AAICharacterBase()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	HealthComponent = CreateDefaultSubobject<UHealthSystem>(TEXT("Health Component"));
-
 }
 
 // Called when the game starts or when spawned
@@ -23,12 +22,16 @@ void AAICharacterBase::BeginPlay()
 void AAICharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
-void AAICharacterBase::TakeDamage(float Amount)
+bool AAICharacterBase::TakeDamage(float Amount)
 {
-	HealthComponent->TakeDamage(Amount);
+	bool test= HealthComponent->TakeDamage(Amount);
+	if (test )
+	{
+		OnDeath();
+	}
+	return test;
 }
 
 void AAICharacterBase::RecoverHealth(float Amount)

@@ -26,7 +26,7 @@ class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDa
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> CameraBoom;
-	
+
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FollowCamera;
@@ -71,7 +71,7 @@ class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDa
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = StatusEffect, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStatusEffectsComponent> StatusEffectComponent;
-	
+
 public:
 	AShooter();
 
@@ -81,8 +81,10 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE class UHealthSystem* GetHealthSystem() const { return HealthComponent; }
+
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE class UStatSystem* GetStatSystem() const { return StatComponent; }
+
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE class UStatusEffectsComponent* GetStatusEffectComponent() const { return StatusEffectComponent; }
 
@@ -102,16 +104,28 @@ public:
 	FVector2D CachedMovementVector;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void TakeDamage(float Amount) override;
+	virtual bool TakeDamage(float Amount) override;
 	UFUNCTION(BlueprintCallable)
 	virtual void RecoverHealth(float Amount) override;
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeath();
 
 	bool bIsMovingBackwards = false;
 	bool bIsSlowApplied = false;
+	
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsDoingAttack = false;
+
+	
+	
+	UFUNCTION(BlueprintCallable)
+	virtual UStatusEffectsComponent* IGetStatusEffectsComponent() override { return StatusEffectComponent; } ;
+
+	UPROPERTY(BlueprintReadWrite)
+	int Score = 0;
 
 	UFUNCTION(BlueprintCallable)
-	virtual UStatusEffectsComponent* IGetStatusEffectsComponent() override {return StatusEffectComponent;} ;
-	
+	void IncreaseScore() { Score++; }
 
 protected:
 	/** Called for movement input */

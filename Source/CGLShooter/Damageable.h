@@ -23,7 +23,7 @@ class CGLSHOOTER_API IDamageable
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual void TakeDamage(float Amount) = 0;
+	virtual bool TakeDamage(float Amount) = 0;
 	UFUNCTION(BlueprintCallable)
 	virtual void RecoverHealth(float Amount) = 0;
 };

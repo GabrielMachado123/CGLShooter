@@ -22,11 +22,11 @@ void UHealthSystem::BeginPlay()
 	Super::BeginPlay();
 }
 
-void UHealthSystem::TakeDamage(float Amount)
+bool UHealthSystem::TakeDamage(float Amount)
 {
 	if (Amount > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE,1,FColor::Red, FString::Printf(TEXT("%f"), Amount));
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, FString::Printf(TEXT("%f"), Amount));
 		Health -= Amount;
 	}
 
@@ -34,8 +34,10 @@ void UHealthSystem::TakeDamage(float Amount)
 	{
 		Health = 0;
 		ShouldDie = true;
+		return true;
 		//TODO DEATH THINGIES HERE
 	}
+	return false;
 }
 
 void UHealthSystem::RecoverHealth(float Amount)

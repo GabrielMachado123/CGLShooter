@@ -165,9 +165,14 @@ void AShooter::SetupPlayerInputComponent(class UInputComponent* PlayerInputCompo
 	}
 }
 
-void AShooter::TakeDamage(float Amount)
+bool AShooter::TakeDamage(float Amount)
 {
-	HealthComponent->TakeDamage(Amount);
+	bool test = HealthComponent->TakeDamage(Amount);
+	if (test)
+	{
+		OnDeath();
+	}
+	return test;
 }
 
 void AShooter::RecoverHealth(float Amount)
@@ -247,7 +252,7 @@ FRotator AShooter::CalculateShootingAngle(const FVector InitialPoint,
 
 	if (UKismetSystemLibrary::LineTraceSingle(CachedWorld, TraceStart, TraceEnd,
 	                                          ETraceTypeQuery::TraceTypeQuery1, true, ActorsToIgnore,
-	                                          EDrawDebugTrace::Persistent, OutHit, true))
+	                                          EDrawDebugTrace::None, OutHit, true))
 	{
 		return UKismetMathLibrary::FindLookAtRotation(InitialPoint, OutHit.ImpactPoint);
 	}
@@ -256,7 +261,7 @@ FRotator AShooter::CalculateShootingAngle(const FVector InitialPoint,
 
 void AShooter::UseBasicAttack()
 {
-	if (RuntimeSkills.IsValidIndex(0) && !GetIsCasting() && RuntimeSkills[0]->bCanUse && RuntimeSkills[1]->bCanUse)
+	if (RuntimeSkills.IsValidIndex(0) && !GetIsCasting() && RuntimeSkills[0]->bCanUse && !bIsDoingAttack)
 	{
 		CachedMouseRotator = CalculateShootingAngle(ShootingPoint->GetComponentLocation(), AttackRange);
 		RuntimeSkills[0]->CastSkill(AttackAnimations[0], StatComponent->GetAttackSpeedAsCooldown(),

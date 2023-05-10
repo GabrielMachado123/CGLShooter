@@ -65,7 +65,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bCanUse;
-
+	UPROPERTY(BlueprintReadWrite)
+	bool bOnCooldown;
+	
 	UPROPERTY(BlueprintReadWrite)
 	AShooter* OwnerCharacter;
 	UPROPERTY(BlueprintReadWrite)

@@ -15,8 +15,6 @@ void USkillBase::InitializeSkill(AShooter* Playable, UWorld* World, int Team)
 	CachedCharacterInterface = Cast<IUsableCharacterSkillSlot>(OwnerCharacter);
 	bCanUse = true;
 	
-	
-	
 	OnInitialize();
 }
 
