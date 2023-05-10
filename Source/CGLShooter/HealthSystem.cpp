@@ -33,6 +33,7 @@ void UHealthSystem::TakeDamage(float Amount)
 	if (Health <= 0)
 	{
 		Health = 0;
+		ShouldDie = true;
 		//TODO DEATH THINGIES HERE
 	}
 }

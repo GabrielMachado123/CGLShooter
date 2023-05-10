@@ -47,6 +47,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool ShouldDie = false;
+
 	// UPROPERTY(VisibleAnywhere, Replicated)
 	// float Shield;
 	// UPROPERTY(VisibleAnywhere)
