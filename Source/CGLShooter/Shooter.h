@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Damageable.h"
+#include "Effectable.h"
 #include "GameFramework/Character.h"
 #include "HealthSystem.h"
 #include "InputActionValue.h"
 #include "InputMappingQuery.h"
 #include "SkillBase.h"
 #include "StatSystem.h"
+#include "StatusEffectComponent.h"
 #include "UsableCharacterSkillSlot.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -17,7 +19,7 @@
 
 
 UCLASS(config=Game)
-class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDamageable
+class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDamageable, public IEffectable
 {
 	GENERATED_BODY()
 
@@ -66,6 +68,9 @@ class AShooter : public ACharacter, public IUsableCharacterSkillSlot, public IDa
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStatSystem> StatComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = StatusEffect, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UStatusEffectsComponent> StatusEffectComponent;
 	
 public:
 	AShooter();
@@ -74,6 +79,12 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE class UHealthSystem* GetHealthSystem() const { return HealthComponent; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE class UStatSystem* GetStatSystem() const { return StatComponent; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE class UStatusEffectsComponent* GetStatusEffectComponent() const { return StatusEffectComponent; }
 
 
 	UFUNCTION()
@@ -98,6 +109,9 @@ public:
 	bool bIsMovingBackwards = false;
 	bool bIsSlowApplied = false;
 
+	UFUNCTION(BlueprintCallable)
+	virtual UStatusEffectsComponent* IGetStatusEffectsComponent() override {return StatusEffectComponent;} ;
+	
 
 protected:
 	/** Called for movement input */
