@@ -26,7 +26,6 @@ bool UHealthSystem::TakeDamage(float Amount)
 {
 	if (Amount > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, FString::Printf(TEXT("%f"), Amount));
 		Health -= Amount;
 	}
 
